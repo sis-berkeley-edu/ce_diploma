@@ -18,13 +18,32 @@ Or install it yourself as:
 
 ## Usage
 
+### Single Sign-On (SSO)
+
 ```ruby
+# configure with options
 sso = CeDiploma::SingleSignOn.new(
   sso_base_url: 'https://www.example.com/',
   client_id: '123ABC0F-1B2C-9876-AF19-555566667777',
   client_number: '1234',
   mask_1: '1!2@3#4$5%6^7&8*9(0)1!2@3#4$5%6^',
   student_id: '654321')
+
+# or dynamically
+sso = CeDiploma::SingleSignOn.new
+sso.enable_test_mode
+sso.client_id = '123ABC0F-1B2C-9876-AF19-555566667777'
+sso.client_number = '1234'
+sso.mask_1 = '1!2@3#4$5%6^7&8*9(0)1!2@3#4$5%6^'
+sso.student_id = '654321'
+
+# set to link to CeDiploma test environment
+sso.enable_test_mode
+
+# or set to link to CeDiploma live environment
+sso.enable_live_mode
+
+# generate single sign on url for student id
 url = sso.single_sign_on_url
 ```
 

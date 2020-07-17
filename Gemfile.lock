@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ce_diploma (0.1.0)
+    ce_diploma (0.1.1)
 
 GEM
   remote: https://rubygems.org/

@@ -3,12 +3,22 @@ module CeDiploma
     require 'digest'
     require 'openssl'
 
+    attr_accessor :sso_base_url, :client_id, :client_number, :mask_1, :student_id
+
     def initialize(options = {})
       @sso_base_url = options[:sso_base_url]
       @client_id = options[:client_id]
       @client_number = options[:client_number]
       @mask_1 = options[:mask_1]
       @student_id = options[:student_id]
+    end
+
+    def enable_test_mode
+      @sso_base_url = 'https://test.secure.cecredentialtrust.com/Account/ERLSSO'
+    end
+
+    def enable_live_mode
+      @sso_base_url = 'https://secure.cecredentialtrust.com/Account/ERLSSO'
     end
 
     def single_sign_on_url
@@ -64,7 +74,6 @@ module CeDiploma
 
     # converts binary string to hex
     def bin_to_hex(s)
-      # s.each_byte.map { |b| b.to_s(16) }.join
       s.each_byte.map { |b| b.to_s(16).rjust(2, '0') }.join
     end
 

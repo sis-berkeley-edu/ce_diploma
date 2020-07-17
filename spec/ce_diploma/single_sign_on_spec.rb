@@ -16,6 +16,34 @@ RSpec.describe CeDiploma::SingleSignOn do
 
   subject { described_class.new(sso_properties) }
 
+  it 'provides accessors for all attributes' do
+    subject.sso_base_url = 'http://www.example.com/Account/ERLSSOABC123'
+    expect(subject.sso_base_url).to eq 'http://www.example.com/Account/ERLSSOABC123'
+    subject.client_id = 'test-client-id'
+    expect(subject.client_id).to eq 'test-client-id'
+    subject.client_number = '4321'
+    expect(subject.client_number).to eq '4321'
+    subject.mask_1 = '&8*9(0)1!2@GvBhJb'
+    expect(subject.mask_1).to eq '&8*9(0)1!2@GvBhJb'
+    subject.student_id = '987654'
+    expect(subject.student_id).to eq '987654'
+  end
+
+
+  describe '#enable_test_mode' do
+    it 'sets base url string to test server' do
+      subject.enable_test_mode
+      expect(subject.sso_base_url).to eq 'https://test.secure.cecredentialtrust.com/Account/ERLSSO'
+    end
+  end
+
+  describe '#enable_live_mode' do
+    it 'sets base url string to test server' do
+      subject.enable_live_mode
+      expect(subject.sso_base_url).to eq 'https://secure.cecredentialtrust.com/Account/ERLSSO'
+    end
+  end
+
   describe '#single_sign_on_url' do
     before { allow(subject).to receive(:hex_key).and_return('4567') }
     it 'returns combination of SSO base url, hex key, and client number' do
